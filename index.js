@@ -21,6 +21,11 @@ function init() {
   camera.position.set(0, eyeHeight, 5);
   camera.rotation.set(0, 0, 0);
 
+  // カメラコントローラーを作成
+  const controls = new THREE.OrbitControls(camera, renderer.domElement);
+  controls.enableDamping = true;
+  controls.dampingFactor = 0.2;
+
   // 床
   const plane = new THREE.Mesh(
       new THREE.PlaneGeometry(1000, 1000),
@@ -67,27 +72,15 @@ function init() {
   // シーンに追加
   scene.add(light);
 
-  // マウス座標を取得
-  let mouseX = 0;
-  document.addEventListener('mousemove', event => {
-    mouseX = event.pageX;
-  });
-
   // 初回実行
   tick();
 
   function tick() {
-    requestAnimationFrame(tick);
-
-    // マウスカーソルが右にあったら右に、左にあったら左にカメラを移動
-    if (mouseX < width * 0.25) {
-      camera.position.x -= 0.01;
-    }
-    else if (mouseX > width * 0.75) {
-      camera.position.x += 0.01;
-    }
+    controls.update();
 
     // レンダリング
     renderer.render(scene, camera);
+
+    requestAnimationFrame(tick);
   }
 }

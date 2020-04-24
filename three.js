@@ -14295,7 +14295,7 @@
 	} );
 
 	/**
-	 * Uniforms library for shared webgl shaders
+	 * Uniforms lib for shared webgl shaders
 	 */
 
 	var UniformsLib = {
@@ -49285,12 +49285,12 @@
 		useQuaternion: {
 			get: function () {
 
-				console.warn( 'THREE.Object3D: .useQuaternion has been removed. The library now uses quaternions by default.' );
+				console.warn( 'THREE.Object3D: .useQuaternion has been removed. The lib now uses quaternions by default.' );
 
 			},
 			set: function () {
 
-				console.warn( 'THREE.Object3D: .useQuaternion has been removed. The library now uses quaternions by default.' );
+				console.warn( 'THREE.Object3D: .useQuaternion has been removed. The lib now uses quaternions by default.' );
 
 			}
 		}
