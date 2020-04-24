@@ -49,14 +49,14 @@ function init() {
       new THREE.BoxGeometry(2, 1, 0.2),
       new THREE.MeshStandardMaterial({color: 0xFF0000})
   );
-  landscape.position.set(2, 1, 0.1);
+  landscape.position.set(2, eyeHeight, 0.1);
   scene.add(landscape);
 
   const portrait = new THREE.Mesh(
       new THREE.BoxGeometry(1, 2, 0.2),
       new THREE.MeshStandardMaterial({color: 0x00FF00})
   );
-  portrait.position.set(-2, 1.5, 0.1);
+  portrait.position.set(-2, eyeHeight, 0.1);
   scene.add(portrait);
 
   // 平行光源
@@ -73,6 +73,15 @@ function init() {
     mouseX = event.pageX / width * 2 - 1; //-1 ~ 1 を返す
   });
 
+  // マウスをクリックしているか
+  let mouseDown = false;
+  document.addEventListener('mousedown', event=>{
+    mouseDown = true;
+  });
+  document.addEventListener('mouseup', event => {
+    mouseDown = false;
+  })
+
   // 初回実行
   tick();
 
@@ -82,6 +91,15 @@ function init() {
     if (mouseX < -0.1 || 0.1 < mouseX) {
       camera.position.x += 0.02 * mouseX;
     }
+
+    // マウスをクリックしていたらズーム
+    if (mouseDown) {
+      camera.zoom += (2 - camera.zoom) * 0.1;
+    }
+    else{
+      camera.zoom += (1 - camera.zoom) * 0.1;
+    }
+    camera.updateProjectionMatrix();
 
     // レンダリング
     renderer.render(scene, camera);
