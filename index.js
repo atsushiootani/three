@@ -21,13 +21,6 @@ function init() {
   camera.position.set(0, eyeHeight, 5);
   camera.rotation.set(0, 0, 0);
 
-  // カメラコントローラーを作成
-  const controls = new THREE.FlyControls(camera, renderer.domElement);
-  controls.movementSpeed = 1;	//移動速度
-  controls.rollSpeed = Math.PI / 24;   //回転速度
-  controls.autoForward = false;         //true:自動で移動する,false:自動で移動しない
-  controls.dragToLook = false;        //true:ドラッグによる視点移動を禁止する,false:ドラッグによる視点移動をする
-
   // 床
   const plane = new THREE.Mesh(
       new THREE.PlaneGeometry(1000, 1000),
@@ -74,11 +67,21 @@ function init() {
   // シーンに追加
   scene.add(light);
 
+  // マウス座標を取得
+  let mouseX = 0;
+  document.addEventListener('mousemove', event => {
+    mouseX = event.pageX / width * 2 - 1; //-1 ~ 1 を返す
+  });
+
   // 初回実行
   tick();
 
   function tick() {
-    controls.update();
+
+    // マウスカーソルが右にあったら右に、左にあったら左にカメラを移動
+    if (mouseX < -0.1 || 0.1 < mouseX) {
+      camera.position.x += 0.02 * mouseX;
+    }
 
     // レンダリング
     renderer.render(scene, camera);
