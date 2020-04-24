@@ -45,6 +45,14 @@ function init() {
   // scene.add(box);
 
   // 額装
+  let loader = new THREE.TextureLoader();
+  var spriteMap = loader.load('./textures/cat.png');
+  var spriteMaterial = new THREE.SpriteMaterial( { map: spriteMap, color: 0xffffff } );
+  var sprite = new THREE.Sprite( spriteMaterial );
+  sprite.position.set(0, eyeHeight, 0.2);
+  sprite.scale.set(200, 200, 1);
+  scene.add(sprite);
+
   const landscape = new THREE.Mesh(
       new THREE.BoxGeometry(2, 1, 0.2),
       new THREE.MeshStandardMaterial({color: 0xFF0000})
