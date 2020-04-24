@@ -46,17 +46,17 @@ function init() {
 
   // 額装
   const landscape = new THREE.Mesh(
-      new THREE.BoxGeometry(2, 1, 0.1),
+      new THREE.BoxGeometry(2, 1, 0.2),
       new THREE.MeshStandardMaterial({color: 0xFF0000})
   );
-  landscape.position.set(2, 1, 0);
+  landscape.position.set(2, 1, 0.1);
   scene.add(landscape);
 
   const portrait = new THREE.Mesh(
-      new THREE.BoxGeometry(1, 2, 0.1),
+      new THREE.BoxGeometry(1, 2, 0.2),
       new THREE.MeshStandardMaterial({color: 0x00FF00})
   );
-  portrait.position.set(-2, 1.5, 0);
+  portrait.position.set(-2, 1.5, 0.1);
   scene.add(portrait);
 
   // 平行光源
@@ -67,15 +67,25 @@ function init() {
   // シーンに追加
   scene.add(light);
 
+  // マウス座標を取得
+  let mouseX = 0;
+  document.addEventListener('mousemove', event => {
+    mouseX = event.pageX;
+  });
+
   // 初回実行
   tick();
 
   function tick() {
     requestAnimationFrame(tick);
 
-    // 箱を回転させる
-    //box.rotation.x += 0.01;
-    //box.rotation.y += 0.01;
+    // マウスカーソルが右にあったら右に、左にあったら左にカメラを移動
+    if (mouseX < width * 0.25) {
+      camera.position.x -= 0.01;
+    }
+    else if (mouseX > width * 0.75) {
+      camera.position.x += 0.01;
+    }
 
     // レンダリング
     renderer.render(scene, camera);
