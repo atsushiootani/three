@@ -22,9 +22,11 @@ function init() {
   camera.rotation.set(0, 0, 0);
 
   // カメラコントローラーを作成
-  const controls = new THREE.OrbitControls(camera, renderer.domElement);
-  controls.enableDamping = true;
-  controls.dampingFactor = 0.2;
+  const controls = new THREE.FlyControls(camera, renderer.domElement);
+  controls.movementSpeed = 1;	//移動速度
+  controls.rollSpeed = Math.PI / 24;   //回転速度
+  controls.autoForward = false;         //true:自動で移動する,false:自動で移動しない
+  controls.dragToLook = false;        //true:ドラッグによる視点移動を禁止する,false:ドラッグによる視点移動をする
 
   // 床
   const plane = new THREE.Mesh(
