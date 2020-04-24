@@ -1,1 +1,1 @@
-index.html をブラウザで開く
+https://atsushiootani.github.io/three/
